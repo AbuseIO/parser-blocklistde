@@ -20,7 +20,7 @@ return [
 
     'feeds' => [
         'login-attack' => [
-            'class'     => '?',
+            'class'     => 'Compromised server',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -29,7 +29,7 @@ return [
         ],
 
         'info' => [
-            'class'     => '?',
+            'class'     => 'Compromised server',
             'type'      => 'Info',
             'enabled'   => true,
             'fields'    => [
@@ -38,7 +38,7 @@ return [
         ],
 
         'harvesting' => [
-            'class'     => '?',
+            'class'     => 'Compromised server',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -47,7 +47,7 @@ return [
         ],
 
         'hack-attack' => [
-            'class'     => '?',
+            'class'     => 'Compromised server',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -56,7 +56,7 @@ return [
         ],
 
         'ircbot' => [
-            'class'     => '?',
+            'class'     => 'Compromised server',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -65,7 +65,7 @@ return [
         ],
 
         'regbot' => [
-            'class'     => '?',
+            'class'     => 'Compromised server',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -74,7 +74,7 @@ return [
         ],
 
         'badbot' => [
-            'class'     => '?',
+            'class'     => 'Compromised server',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -83,7 +83,7 @@ return [
         ],
 
         'ddos' => [
-            'class'     => '?',
+            'class'     => 'DDoS sending Server',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
