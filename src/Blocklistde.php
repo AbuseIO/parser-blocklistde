@@ -82,6 +82,5 @@ class Blocklistde extends Parser
         }
 
         return $this->success($events);
-
     }
 }
