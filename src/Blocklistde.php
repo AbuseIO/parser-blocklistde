@@ -72,6 +72,7 @@ class Blocklistde extends Parser
             $event = [
                 'source'        => $this->config['parser']['name'],
                 'ip'            => $fields['Source'],
+                'domain'        => false,
                 'class'         => $feedConfig['class'],
                 'type'          => $feedConfig['type'],
                 'timestamp'     => strtotime($fields['Date']),
