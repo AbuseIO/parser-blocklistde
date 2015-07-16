@@ -11,7 +11,7 @@ use SplFileObject;
 use Uuid;
 use Log;
 
-class Google extends Parser
+class Blocklistde extends Parser
 {
     public $parsedMail;
     public $arfMail;
