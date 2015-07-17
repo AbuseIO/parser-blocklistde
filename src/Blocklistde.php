@@ -2,7 +2,6 @@
 
 namespace AbuseIO\Parsers;
 
-use AbuseIO\Parsers\Parser;
 use Ddeboer\DataImport\Reader;
 use Ddeboer\DataImport\Writer;
 use Ddeboer\DataImport\Filter;
@@ -15,31 +14,33 @@ class Blocklistde extends Parser
 {
     public $parsedMail;
     public $arfMail;
-    public $config;
 
-    public function __construct($parsedMail, $arfMail, $config = false)
+    /**
+     * Create a new Blocklistde instance
+     */
+    public function __construct($parsedMail, $arfMail)
     {
-        $this->configFile = __DIR__ . '/../config/' . basename(__FILE__);
-        $this->config = $config;
         $this->parsedMail = $parsedMail;
         $this->arfMail = $arfMail;
-
     }
 
+    /**
+     * Parse attachments
+     * @return Array    Returns array with failed or success data
+     *                  (See parser-common/src/Parser.php) for more info.
+     */
     public function parse()
     {
-
         Log::info(
             get_class($this) . ': Received message from: ' .
             $this->parsedMail->getHeader('from') . " with subject: '" .
             $this->parsedMail->getHeader('subject') . "' arrived at parser: " .
-            $this->config['parser']['name']
+            config('Blocklistde.parser.name')
         );
 
-        $events = [];
+        $events = [ ];
 
         foreach ($this->parsedMail->getAttachments() as $attachment) {
-
             if ($attachment->filename != 'report.txt') {
                 continue;
             }
@@ -48,34 +49,31 @@ class Blocklistde extends Parser
             $fields = array_combine($regs[1], $regs[2]);
 
             // Handle aliasses first
-            foreach ($this->config['parser']['aliasses'] as $alias => $real) {
+            foreach (config('Blocklistde.parser.aliases') as $alias => $real) {
                 if ($fields['Report-Type'] == $alias) {
                     $fields['Report-Type'] = $real;
                 }
             }
 
-            $feed = $fields['Report-Type'];
+            $feedName = $fields['Report-Type'];
 
-            if (!isset($this->config['feeds'][$feed])) {
-                return $this->failed("Detected feed ${feed} is unknown. No sense in trying to parse.");
-            } else {
-                $feedConfig = $this->config['feeds'][$feed];
+            if (empty(config("Blocklistde.feeds.{$feedName}"))) {
+                return $this->failed("Detected feed '{$feed}' is unknown.");
             }
 
-            if ($feedConfig['enabled'] !== true) {
+            if (config("Blocklistde.feeds.{$feedName}.enabled") !== true) {
                 return $this->success(
-                    "Detected feed ${feed} has been disabled by configuration. No sense in trying to parse."
+                    "Detected feed '{$feed}' has been disabled by configuration."
                 );
             }
 
-
             $event = [
-                'source'        => $this->config['parser']['name'],
+                'source'        => config("Blocklistde.parser.name"),
                 'ip'            => $fields['Source'],
                 'domain'        => false,
                 'uri'           => false,
-                'class'         => $feedConfig['class'],
-                'type'          => $feedConfig['type'],
+                'class'         => config("Blocklistde.feeds.{$feedName}.class"),
+                'type'          => config("Blocklistde.feeds.{$feedName}.type"),
                 'timestamp'     => strtotime($fields['Date']),
                 'information'   => json_encode($fields),
             ];
