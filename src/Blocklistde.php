@@ -5,10 +5,8 @@ namespace AbuseIO\Parsers;
 use Ddeboer\DataImport\Reader;
 use Ddeboer\DataImport\Writer;
 use Ddeboer\DataImport\Filter;
-use Illuminate\Filesystem\Filesystem;
-use SplFileObject;
-use Uuid;
 use Log;
+use ReflectionClass;
 
 class Blocklistde extends Parser
 {
@@ -31,11 +29,15 @@ class Blocklistde extends Parser
      */
     public function parse()
     {
+        // Generalize the local config based on the parser class name.
+        $reflect = new ReflectionClass($this);
+        $configBase = 'parsers.' . $reflect->getShortName();
+
         Log::info(
             get_class($this) . ': Received message from: ' .
             $this->parsedMail->getHeader('from') . " with subject: '" .
             $this->parsedMail->getHeader('subject') . "' arrived at parser: " .
-            config('config.Blocklistde.parser.name')
+            config("{$configBase}.parser.name")
         );
 
         $events = [ ];
@@ -49,7 +51,7 @@ class Blocklistde extends Parser
             $fields = array_combine($regs[1], $regs[2]);
 
             // Handle aliasses first
-            foreach (config('config.Blocklistde.parser.aliases') as $alias => $real) {
+            foreach (config("{$configBase}.parser.aliases") as $alias => $real) {
                 if ($fields['Report-Type'] == $alias) {
                     $fields['Report-Type'] = $real;
                 }
@@ -57,21 +59,21 @@ class Blocklistde extends Parser
 
             $feedName = $fields['Report-Type'];
 
-            if (empty(config("config.Blocklistde.feeds.{$feedName}"))) {
-                return $this->failed("Detected feed '{$feed}' is unknown.");
+            if (empty(config("{$configBase}.feeds.{$feedName}"))) {
+                return $this->failed("Detected feed '{$feedName}' is unknown.");
             }
 
-            if (config("config.Blocklistde.feeds.{$feedName}.enabled") !== true) {
+            if (config("{$configBase}.feeds.{$feedName}.enabled") !== true) {
                 continue;
             }
 
             $event = [
-                'source'        => config("config.Blocklistde.parser.name"),
+                'source'        => config("{$configBase}.parser.name"),
                 'ip'            => $fields['Source'],
                 'domain'        => false,
                 'uri'           => false,
-                'class'         => config("config.Blocklistde.feeds.{$feedName}.class"),
-                'type'          => config("config.Blocklistde.feeds.{$feedName}.type"),
+                'class'         => config("{$configBase}.feeds.{$feedName}.class"),
+                'type'          => config("{$configBase}.feeds.{$feedName}.type"),
                 'timestamp'     => strtotime($fields['Date']),
                 'information'   => json_encode($fields),
             ];
