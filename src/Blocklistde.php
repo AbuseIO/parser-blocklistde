@@ -35,7 +35,7 @@ class Blocklistde extends Parser
             get_class($this) . ': Received message from: ' .
             $this->parsedMail->getHeader('from') . " with subject: '" .
             $this->parsedMail->getHeader('subject') . "' arrived at parser: " .
-            config('Blocklistde.parser.name')
+            config('config.Blocklistde.parser.name')
         );
 
         $events = [ ];
@@ -49,7 +49,7 @@ class Blocklistde extends Parser
             $fields = array_combine($regs[1], $regs[2]);
 
             // Handle aliasses first
-            foreach (config('Blocklistde.parser.aliases') as $alias => $real) {
+            foreach (config('config.Blocklistde.parser.aliases') as $alias => $real) {
                 if ($fields['Report-Type'] == $alias) {
                     $fields['Report-Type'] = $real;
                 }
@@ -57,23 +57,21 @@ class Blocklistde extends Parser
 
             $feedName = $fields['Report-Type'];
 
-            if (empty(config("Blocklistde.feeds.{$feedName}"))) {
+            if (empty(config("config.Blocklistde.feeds.{$feedName}"))) {
                 return $this->failed("Detected feed '{$feed}' is unknown.");
             }
 
-            if (config("Blocklistde.feeds.{$feedName}.enabled") !== true) {
-                return $this->success(
-                    "Detected feed '{$feed}' has been disabled by configuration."
-                );
+            if (config("config.Blocklistde.feeds.{$feedName}.enabled") !== true) {
+                continue;
             }
 
             $event = [
-                'source'        => config("Blocklistde.parser.name"),
+                'source'        => config("config.Blocklistde.parser.name"),
                 'ip'            => $fields['Source'],
                 'domain'        => false,
                 'uri'           => false,
-                'class'         => config("Blocklistde.feeds.{$feedName}.class"),
-                'type'          => config("Blocklistde.feeds.{$feedName}.type"),
+                'class'         => config("config.Blocklistde.feeds.{$feedName}.class"),
+                'type'          => config("config.Blocklistde.feeds.{$feedName}.type"),
                 'timestamp'     => strtotime($fields['Date']),
                 'information'   => json_encode($fields),
             ];
