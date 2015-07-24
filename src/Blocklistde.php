@@ -50,6 +50,13 @@ class Blocklistde extends Parser
             preg_match_all('/([\w\-]+): (.*)[ ]*\r?\n/', $attachment->getContent(), $regs);
             $fields = array_combine($regs[1], $regs[2]);
 
+            // We need this field to detect the feed, so we need to check it first
+            if (empty($fields['Report-Type'])) {
+                return $this->failed(
+                    "Unable to detect feed because the required field Report-Type is missing."
+                );
+            }
+
             // Handle aliasses first
             foreach (config("{$configBase}.parser.aliases") as $alias => $real) {
                 if ($fields['Report-Type'] == $alias) {
@@ -58,6 +65,17 @@ class Blocklistde extends Parser
             }
 
             $feedName = $fields['Report-Type'];
+
+            $columns = array_filter(config("{$configBase}.feeds.{$feedName}.fields"));
+            if (count($columns) > 0) {
+                foreach ($columns as $column) {
+                    if (!isset($fields[$column])) {
+                        return $this->failed(
+                            "Required field ${column} is missing in the report or config is incorrect."
+                        );
+                    }
+                }
+            }
 
             if (empty(config("{$configBase}.feeds.{$feedName}"))) {
                 return $this->failed("Detected feed '{$feedName}' is unknown.");

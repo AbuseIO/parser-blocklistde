@@ -11,10 +11,10 @@ return [
             //
         ],
         'aliases'       => [
-            'irc-bot' => 'ircbot',
-            'reg-bot' => 'ircbot',
-            'bad-bot' => 'badbot',
-            'apacheddos' => 'ddos',
+            'irc-bot'       => 'ircbot',
+            'reg-bot'       => 'ircbot',
+            'bad-bot'       => 'badbot',
+            'apacheddos'    => 'ddos',
         ],
     ],
 
@@ -24,7 +24,9 @@ return [
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                //
+                'Report-Type',
+                'Source',
+                'Date',
             ],
         ],
 
@@ -33,7 +35,9 @@ return [
             'type'      => 'Info',
             'enabled'   => true,
             'fields'    => [
-                //
+                'Report-Type',
+                'Source',
+                'Date',
             ],
         ],
 
@@ -42,7 +46,9 @@ return [
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                //
+                'Report-Type',
+                'Source',
+                'Date',
             ],
         ],
 
@@ -60,7 +66,9 @@ return [
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                //
+                'Report-Type',
+                'Source',
+                'Date',
             ],
         ],
 
@@ -69,7 +77,9 @@ return [
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                //
+                'Report-Type',
+                'Source',
+                'Date',
             ],
         ],
 
@@ -78,7 +88,9 @@ return [
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                //
+                'Report-Type',
+                'Source',
+                'Date',
             ],
         ],
 
@@ -87,7 +99,9 @@ return [
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                //
+                'Report-Type',
+                'Source',
+                'Date',
             ],
         ],
     ],
