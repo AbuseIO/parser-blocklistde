@@ -66,6 +66,10 @@ class Blocklistde extends Parser
 
             $feedName = $fields['Report-Type'];
 
+            if (empty(config("{$configBase}.feeds.{$feedName}"))) {
+                return $this->failed("Detected feed '{$feedName}' is unknown.");
+            }
+
             $columns = array_filter(config("{$configBase}.feeds.{$feedName}.fields"));
             if (count($columns) > 0) {
                 foreach ($columns as $column) {
@@ -75,10 +79,6 @@ class Blocklistde extends Parser
                         );
                     }
                 }
-            }
-
-            if (empty(config("{$configBase}.feeds.{$feedName}"))) {
-                return $this->failed("Detected feed '{$feedName}' is unknown.");
             }
 
             if (config("{$configBase}.feeds.{$feedName}.enabled") !== true) {
