@@ -1,6 +1,7 @@
 <?php
 
 namespace AbuseIO\Parsers;
+use AbuseIO\Models\Incident;
 
 /**
  * Class Blocklistde
@@ -51,16 +52,19 @@ class Blocklistde extends Parser
                                 // Event has all requirements met, filter and add!
                                 $report = $this->applyFilters($report);
 
-                                $this->events[] = [
-                                    'source' => config("{$this->configBase}.parser.name"),
-                                    'ip' => $report['Source'],
-                                    'domain' => false,
-                                    'uri' => false,
-                                    'class' => config("{$this->configBase}.feeds.{$this->feedName}.class"),
-                                    'type' => config("{$this->configBase}.feeds.{$this->feedName}.type"),
-                                    'timestamp' => strtotime($report['Date']),
-                                    'information' => json_encode($report),
-                                ];
+                                $incident = new Incident();
+                                $incident->source      = config("{$this->configBase}.parser.name");
+                                $incident->source_id   = false;
+                                $incident->ip          = $report['Source'];
+                                $incident->domain      = false;
+                                $incident->uri         = false;
+                                $incident->class       = config("{$this->configBase}.feeds.{$this->feedName}.class");
+                                $incident->type        = config("{$this->configBase}.feeds.{$this->feedName}.type");
+                                $incident->timestamp   = strtotime($report['Date']);
+                                $incident->information = json_encode($report);
+
+                                $this->events[] = $incident;
+
                             }
                         }
                     } else {
