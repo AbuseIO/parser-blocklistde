@@ -1,6 +1,7 @@
 <?php
 
 namespace AbuseIO\Parsers;
+
 use AbuseIO\Models\Incident;
 
 /**
@@ -49,7 +50,7 @@ class Blocklistde extends Parser
                         if ($this->isKnownFeed() && $this->isEnabledFeed()) {
                             // Sanity check
                             if ($this->hasRequiredFields($report) === true) {
-                                // Event has all requirements met, filter and add!
+                                // incident has all requirements met, filter and add!
                                 $report = $this->applyFilters($report);
 
                                 $incident = new Incident();
@@ -63,7 +64,7 @@ class Blocklistde extends Parser
                                 $incident->timestamp   = strtotime($report['Date']);
                                 $incident->information = json_encode($report);
 
-                                $this->events[] = $incident;
+                                $this->incidents[] = $incident;
 
                             }
                         }
@@ -72,7 +73,7 @@ class Blocklistde extends Parser
                         $this->warningCount++;
                     }
                 } else {
-                    // We cannot parse this report, since we cant collect event data.
+                    // We cannot parse this report, since we cant collect incident data.
                     $this->warningCount++;
                 }
             } // end if: found report file to parse
