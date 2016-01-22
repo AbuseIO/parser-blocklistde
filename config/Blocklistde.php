@@ -21,7 +21,7 @@ return [
 
     'feeds' => [
         'login-attack' => [
-            'class'     => 'Compromised server',
+            'class'     => 'COMPROMISED_SERVER',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -32,7 +32,7 @@ return [
         ],
 
         'info' => [
-            'class'     => 'Compromised server',
+            'class'     => 'COMPROMISED_SERVER',
             'type'      => 'Info',
             'enabled'   => true,
             'fields'    => [
@@ -43,7 +43,7 @@ return [
         ],
 
         'harvesting' => [
-            'class'     => 'Compromised server',
+            'class'     => 'COMPROMISED_SERVER',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -54,7 +54,7 @@ return [
         ],
 
         'hack-attack' => [
-            'class'     => 'Compromised server',
+            'class'     => 'COMPROMISED_SERVER',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -63,7 +63,7 @@ return [
         ],
 
         'ircbot' => [
-            'class'     => 'Compromised server',
+            'class'     => 'COMPROMISED_SERVER',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -74,7 +74,7 @@ return [
         ],
 
         'regbot' => [
-            'class'     => 'Compromised server',
+            'class'     => 'COMPROMISED_SERVER',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -85,7 +85,7 @@ return [
         ],
 
         'badbot' => [
-            'class'     => 'Compromised server',
+            'class'     => 'COMPROMISED_SERVER',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -96,7 +96,7 @@ return [
         ],
 
         'ddos' => [
-            'class'     => 'DDoS sending Server',
+            'class'     => 'DDOS_SENDING_SERVER',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
