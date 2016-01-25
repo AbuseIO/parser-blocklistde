@@ -22,7 +22,7 @@ return [
     'feeds' => [
         'login-attack' => [
             'class'     => 'COMPROMISED_SERVER',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'Report-Type',
@@ -33,7 +33,7 @@ return [
 
         'info' => [
             'class'     => 'COMPROMISED_SERVER',
-            'type'      => 'Info',
+            'type'      => 'INFO',
             'enabled'   => true,
             'fields'    => [
                 'Report-Type',
@@ -44,7 +44,7 @@ return [
 
         'harvesting' => [
             'class'     => 'COMPROMISED_SERVER',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'Report-Type',
@@ -55,7 +55,7 @@ return [
 
         'hack-attack' => [
             'class'     => 'COMPROMISED_SERVER',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 //
@@ -64,7 +64,7 @@ return [
 
         'ircbot' => [
             'class'     => 'COMPROMISED_SERVER',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'Report-Type',
@@ -75,7 +75,7 @@ return [
 
         'regbot' => [
             'class'     => 'COMPROMISED_SERVER',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'Report-Type',
@@ -86,7 +86,7 @@ return [
 
         'badbot' => [
             'class'     => 'COMPROMISED_SERVER',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'Report-Type',
@@ -97,7 +97,7 @@ return [
 
         'ddos' => [
             'class'     => 'DDOS_SENDING_SERVER',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'Report-Type',
