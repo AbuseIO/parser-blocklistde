@@ -31,7 +31,7 @@ class Blocklistde extends Parser
     {
         foreach ($this->parsedMail->getAttachments() as $attachment) {
             // Only use the Blocklistde formatted reports, skip all others
-            if (preg_match(config("{$this->configBase}.parser.report_file"), $attachment->filename)) {
+            if (preg_match(config("{$this->configBase}.parser.report_file"), $attachment->getFilename())) {
                 if (preg_match_all('/([\w\-]+): (.*)[ ]*\r?\n/', $attachment->getContent(), $regs)) {
                     $report = array_combine($regs[1], $regs[2]);
 
